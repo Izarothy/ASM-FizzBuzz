@@ -2,15 +2,16 @@ section .text
 	global _start
 
 _start:
-	;MOV [num], byte 1
+
 mainLoop:
-	;Starts at 1
+	; Starts at 1
 	ADD [num], byte 1
-	;Change the number below to whatever number of times you want the loop to run
+	; Change the number below to whatever number of times you want the loop to run
 	CMP [num], byte 100
 	
 	JG quit
 	
+	; Modulo the current loop number (num) - if divisible by 15, go to FizzBuzz section
 	MOV al, [num]
 	XOR ah, ah
 	MOV bl, 15
@@ -18,6 +19,7 @@ mainLoop:
 	CMP ah, 0
 	JE sectFizzBuzz
 
+	; Modulo the current loop number (num) - if divisible by 3, go to Fizz section
 	MOV al, [num]
 	XOR ah, ah
 	MOV bl, 3
@@ -25,6 +27,7 @@ mainLoop:
 	CMP ah, 0
 	JE sectFizz
 	
+	; Modulo the current loop number (num) - if divisible by 5, go to Buzz section
 	MOV al, [num]
 	XOR ah, ah
 	MOV bl, 5
@@ -36,6 +39,7 @@ mainLoop:
 
 	LOOP mainLoop
 sectFizz:
+	; Prints fizz
 	MOV edx, fizzLen
 	MOV ecx, fizz
 	MOV ebx, 1
@@ -43,6 +47,7 @@ sectFizz:
 	INT 0x80
 	JMP mainLoop
 sectBuzz:
+	; Prints buzz
 	MOV edx, buzzLen
 	MOV ecx, buzz
 	MOV ebx, 1
@@ -50,6 +55,7 @@ sectBuzz:
 	INT 0x80
 	JMP mainLoop
 sectFizzBuzz:
+	; Prints fizzbuzz
 	MOV edx, fizzBuzzLen
 	MOV ecx, fizzBuzz
 	MOV ebx, 1
@@ -57,6 +63,7 @@ sectFizzBuzz:
 	INT 0x80
 	JMP mainLoop
 sectNeither:
+	; Print when a number is neither fizz, buzz, nor fizzbuzz, might change to the actual number later
 	MOV edx, neitherLen
 	MOV ecx, neither
 	MOV ebx, 1
@@ -64,6 +71,7 @@ sectNeither:
 	INT 0x80
 	JMP mainLoop
 quit:
+	; Program end, print farewell message
 	MOV edx, len
 	MOV ecx, msg
 	MOV ebx, 1
